@@ -2,8 +2,7 @@ package com.aula.cerveja.controller;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aula.cerveja.model.Cerveja;
+import com.aula.cerveja.repository.Cervejas;
 
 @Controller
 @RequestMapping(value = "/cervejas")
 public class CervejasController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CervejasController.class);
+	@Autowired
+	private Cervejas cervejas;
 	
 	@RequestMapping("/novo")
-	public String novo(Cerveja cerveja) {
-		logger.error("Log de error!");
-		logger.info("Log de info!");
+	public String novo(Cerveja cerveja) {		
+		
+		cervejas.findAll(); // Apagar...
 		
 		return "cerveja/CadastroCerveja";
 	}
