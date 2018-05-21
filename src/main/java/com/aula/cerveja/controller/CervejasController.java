@@ -14,28 +14,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.aula.cerveja.model.Cerveja;
 import com.aula.cerveja.model.Origem;
 import com.aula.cerveja.model.Sabor;
-import com.aula.cerveja.repository.Cervejas;
 import com.aula.cerveja.repository.Estilos;
+import com.aula.cerveja.service.CadastroCervejaService;
 
 @Controller
 @RequestMapping(value = "/cervejas")
 public class CervejasController {
-	
-	@Autowired
-	private Cervejas cervejas;
-	
+		
 	@Autowired
 	private Estilos estilos;
 	
-	@RequestMapping("/novoAntigo")
-	public String novoAntigo(Cerveja cerveja) {		
-		
-		cervejas.findAll(); // Apagar...
-		
-		return "cerveja/CadastroCerveja";
-	}
-	
-	//Para a segunda aula de ter tempo 9.5
+	@Autowired
+	private CadastroCervejaService cadastroCervejaService;
+				
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cerveja cerveja) {	
 		
@@ -52,9 +43,18 @@ public class CervejasController {
 			return novo(cerveja);
 		}
 		
-		// Salvar no banco de dados...
+		// Salvar so na aula 98 cadastroCervejaService...		
+		cadastroCervejaService.salvar(cerveja);
 		attributes.addFlashAttribute("mensagem", "Cerveja salva com sucesso!");
+		
 		System.out.println(">>> sku: " + cerveja.getSku());
+		System.out.println(">>> sabor: " + cerveja.getSabor());
+		System.out.println(">>> Origem: " + cerveja.getOrigem());
+		
+		System.out.println("cerveja.getEstilo(): " + cerveja.getEstilo());
+		if (cerveja.getEstilo() != null)
+			System.out.println(">>> Estilo: " + cerveja.getEstilo().getCodigo());
+		
 		return new ModelAndView("redirect:/cervejas/novo");
 	}		
 }
