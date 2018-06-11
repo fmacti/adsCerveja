@@ -17,4 +17,11 @@ public class CadastroCervejaService {
 	public void salvar(Cerveja cerveja) {
 		cervejas.save(cerveja);
 	}
+	
+	@Transactional
+
+	public void excluir(Long id) {
+		cervejas.delete(id);		
+		
+	}
 }
